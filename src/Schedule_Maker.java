@@ -1,3 +1,16 @@
+/* This class is the man class in the schedule making program. It essentially takes in
+ * what times the store will open and close, which registers will be opened, and which
+ * employees will be working and from what time to what time. With this information, it
+ * will output the allocations of who will be assigned to which register, and from what
+ * time to what time.
+ *
+ * <p>Bugs: Currently does not do any of what it's supposed to do. It successfully takes
+ * in all of the input through. Still working on how to do the actual allocation bit
+ * itself.
+ *
+ * @author Camdyn Rasque, Published on March 16th, 2018
+ */
+
 import java.io.FileNotFoundException;
 import java.util.*;
 import java.io.*;
@@ -11,6 +24,12 @@ public class Schedule_Maker {
     private static int[] regSupplies = {122, 123};
     private static int[] regWomens = {124, 125};
 
+    /* This method will convert a time (e.g. 7:45am) into military time, as a double
+    *  (7:45am would become 7.75; Assumes time is in increments of 15 minutes)
+    *
+    *  @Param time is the input time in string form
+    *  @Return the time as a double
+    * */
     private static double stringToTime(String time){
         int hours, minutes;
         int ampmIndex = 0;
@@ -43,6 +62,13 @@ public class Schedule_Maker {
         return finalTime;
     }
 
+
+    /* This method will convert a time that's in military time as a double, into a string
+     *  (14.25 would become 2:15pm; Assumes time is in increments of 0.25 (15 minutes))
+     *
+     *  @Param time is the input time in string form
+     *  @Return the time as a double
+     * */
     public static String timeToString(double time){
         String finalTime = null;
         if(time >= 24.00){
@@ -86,12 +112,23 @@ public class Schedule_Maker {
         return finalTime;
     }
 
+    /* This method is just to save space, skips numLines number of lines
+    *
+    * @Param scan is the input scanner, will be used to call nextLine()
+    * @Param numLines is the number of lines to be skipped
+    */
     private static void skipLines(Scanner scan, int numLines){
         for(int i = 0; i < numLines; i++){
             scan.nextLine();
         }
     }
 
+    /* This method returns an array that is the intersection of two arrays
+    *
+    * @Param array1 is the first array to be input
+    * @Param array2 is the second array to be input
+    * @Return an array that is all of the elements the two arrays have in common
+    * */
     private static int[] intersection(int[] array1, int[] array2){
         int i, j, count = 0;
         int[] newArr = new int[Math.max(array1.length, array2.length)];
@@ -109,6 +146,15 @@ public class Schedule_Maker {
         return returnArr;
     }
 
+    /* This method will give a List<Cashier> of all of the people who are currently at
+    * work at the given time.
+    *
+    * @Param time is the input time which will be checked
+    * @Param inputList is the list of every cashier who is working that day and the
+    *        times that they are working
+    * @Return List<Cashier> will be the list of all of the cashiers working at the given
+    *         time
+    * */
     public static List<Cashier> atWorkNow(double time, List<Cashier> inputList){
         List<Cashier> atWork = new ArrayList<>();
         for(int i = 0; i < inputList.size(); i++){
@@ -119,6 +165,13 @@ public class Schedule_Maker {
         return atWork;
     }
 
+    /* This method will take a register number, and find it's index in the given
+    *  List of registers
+    *
+    *  @Param regNum is the register number to be found
+    *  @Param input is the list of registers that will be searched
+    *  @Return int is the index of that register in the list
+    * */
     public static int indexOfRegister(List<Register> input, int regNum){
         int indexOfReg = -1;
         for(int i = 0; i < input.size(); i++){
@@ -129,6 +182,9 @@ public class Schedule_Maker {
         return indexOfReg;
     }
 
+    // The main method of the whole program, this is where all of the allocations happen
+    // Throws a FileNotFoundException since it will be taking in input from a template file
+    // I created, called Schedule_Maker_Template.txt
     public static void main(String[] args) throws FileNotFoundException {
         String FILE_PATH = "./src/Schedule_Maker_Template.txt";
         Scanner scan = new Scanner(new FileInputStream(FILE_PATH));
