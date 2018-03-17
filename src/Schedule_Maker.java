@@ -136,11 +136,12 @@ public class Schedule_Maker {
             for(j = 0; j < array2.length; j++){
                 if(array1[i] == array2[j]){
                     newArr[count] = array1[i];
+                    count += 1;
                 }
             }
         }
-        int[] returnArr = new int[newArr.length];
-        for(i = 0; i < newArr.length; i++){
+        int[] returnArr = new int[count+1];
+        for(i = 0; i < returnArr.length; i++){
             returnArr[i] = newArr[i];
         }
         return returnArr;
@@ -158,7 +159,7 @@ public class Schedule_Maker {
     public static List<Cashier> atWorkNow(double time, List<Cashier> inputList){
         List<Cashier> atWork = new ArrayList<>();
         for(int i = 0; i < inputList.size(); i++){
-            if(inputList.get(i).startTime < time && inputList.get(i).endTime > time){
+            if(inputList.get(i).startTime <= time && inputList.get(i).endTime >= time){
                 atWork.add(inputList.get(i));
             }
         }
@@ -172,8 +173,9 @@ public class Schedule_Maker {
     *  @Param input is the list of registers that will be searched
     *  @Return int is the index of that register in the list
     * */
-    public static int indexOfRegister(List<Register> input, int regNum){
+    public static int indexOfReg(List<Register> input, int regNum){
         int indexOfReg = -1;
+        System.out.println("regNum: " + regNum);
         for(int i = 0; i < input.size(); i++){
             if(input.get(i).regNumber == regNum){
                 indexOfReg = i;
@@ -192,11 +194,12 @@ public class Schedule_Maker {
         List<Cashier> cashierList = new ArrayList<>();
         int[] regNums;
         List<int[]> regZones = new ArrayList<>();
-        List<Cashier> tempList = new ArrayList<>();
-        int numReg, numCashiers, randCashier, randReg, i, j;
+        List<Cashier> tempList;
+        int numReg, numCashiers, randReg, nextReg, i, j;
         String openStr, closeStr, tempName;
         double openTime, closeTime;
         Random rand = new Random();
+        Cashier randCash;
 
         // Grabs the Register Opening Times
         skipLines(scan, 2);
@@ -250,13 +253,28 @@ public class Schedule_Maker {
         regZones.add(regWomens);
 
         // regCS, regBooks, regPerks, regLibraryWalk, regSupplies, regWomens
+        // As of now, it's just opening allocations
+        tempList = atWorkNow(openTime, cashierList);
         for(i = 0; i < regZones.size(); i++){
-            tempList = atWorkNow(openTime, cashierList);
-            //randCashier = rand.nextInt(tempList.length);
-            for(j = 0; j < tempList.size(); j++){
-                randReg = rand.nextInt(regZones.get(i).length);
+            Collections.shuffle(tempList);
+            randReg = regZones.get(i)[rand.nextInt(regZones.get(i).length)];
+            randCash = tempList.get(rand.nextInt(tempList.size()));
+            registerList.get(indexOfReg(registerList, randReg)).assignCashier(randCash, openTime,
+                    randCash.endTime);
+            tempList.remove(randCash);
+        }
 
+        while(tempList.size() != 0){
+            randCash = tempList.get(0);
+            nextReg = rand.nextInt(numReg);
+            if(registerList.get(nextReg).assignCashier(randCash, openTime, randCash.endTime)){
+                tempList.remove(0);
             }
+        }
+
+        for(i = 0; i < registerList.size(); i++){
+            registerList.get(i).print();
+            System.out.println();
         }
     }
 }

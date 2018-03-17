@@ -84,4 +84,14 @@ public class Register {
         int index = (int)(time / 0.25);
         return index;
     }
+
+    /** This method simply prints the register number and all of the allocations to itself
+     */
+    public void print(){
+        System.out.println("Register #" + this.regNumber);
+        for(int i = 0; i < this.shifts.length; i++){
+            String time = Schedule_Maker.timeToString(openTime + 0.25*i);
+            System.out.println(time + ": " + this.shifts[i].name);
+        }
+    }
 }
