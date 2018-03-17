@@ -1,0 +1,43 @@
+What time will the regular cashier registers be opening?
+(Round to the nearest 15 minutes and include the am/pm - Do this for all times)
+7:45am
+
+And what time will the registers be closing?
+6:15pm
+
+How many registers will be opened?
+(Leave out 101-105)
+9
+
+Which registers are you opening?
+(Type the register number followed by a space for each one)
+106 114 115 118 120 121 122 123 124
+
+How many cashiers will be working?
+22
+
+Who will be working? - Put their start and end time next to their name
+(All in one line, type their first and last name, then write start time (space) end time)
+(e.g. Camdyn Rasque 11:00am 3:30pm - *NOTE* One person per line. Assumes shift is at least 3 hours)
+Abby Medina 2:00pm 6:15pm
+Ahtziry Esquivel 2:15pm 6:15pm
+Airrell Gaither 7:45am 11:45am
+Anthony Ostia 12:00pm 4:00pm
+Bryant Song 3:00pm 6:15pm
+Cassandra Puertas 2:00pm 6:15pm
+Chelsea Lee 11:30am 3:30pm
+Claudia Deng 7:45 11:45am
+Iain Paul 11:00am 3:00pm
+Jacob Ugalde 2:00pm 6:15pm
+Jessica Orgusyan 7:45am 12:00pm
+Katie Ninh 10:00am 2:00pm
+Kayla Carrillo 12:00pm 4:00pm
+Leena Lozon 1:00pm 5:00pm
+Marlene Gomez 7:45am 12:00pm
+Melissa Maldonado 7:45am 12:00pm
+Miguel Ceja 3:00pm 6:15pm
+Monique Gentz 12:00pm 4:00pm
+Ryan Fimbres 1:00pm 4:00pm
+Shirley Dinh 7:45am 12:00pm
+Vicky Li 10:00am 2:00pm
+Ysabel Gonzalez 11:00am 3:00pm
